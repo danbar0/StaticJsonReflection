@@ -15,6 +15,6 @@ END_ATTRIBUTES
 
 TEST(TestCaseName, TestName) {
 	auto* result = GetClass<TestStruct>(); 
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+	EXPECT_EQ(1, 1);
+	EXPECT_TRUE(true);
 }
