@@ -17,7 +17,7 @@ struct Type {
 };
 
 struct Field {
-		const Type* type;
+		Type* type;
 		std::string name;
 		size_t offset; 
 };
@@ -27,14 +27,14 @@ struct Class {
 };
 
 template<typename T>
-const Type* GetType();
+Type* GetType();
 
 template<typename T>
-const Class* GetClass();
+Class* GetClass();
 
 #define DEFINE_TYPE(TYPE) \
 template<> \
-const Type* GetType<TYPE>() { \
+Type* GetType<TYPE>() { \
 		static Type type; \
 		type.stringName = #TYPE; \
 		type.size = sizeof(TYPE); \
@@ -44,7 +44,7 @@ const Type* GetType<TYPE>() { \
 
 #define BEGIN_ATTRIBUTES_FOR(CLASS)  \
 template<> \
-const Class* GetClass<CLASS>() { \
+Class* GetClass<CLASS>() { \
 		using ClassType = CLASS; \
 		static Class localClass; \
 		enum { BASE = __COUNTER__ }; \

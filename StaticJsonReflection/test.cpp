@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../StaticJsonReflectionProj/GetClass.hpp"
+#include "../StaticJsonReflectionProj/ObjectSerialization.hpp"
 
 struct TestStruct {
 	uint32_t field3;
@@ -14,7 +15,7 @@ DEFINE_MEMBER(field1);
 END_ATTRIBUTES
 
 TEST(TestCaseName, TestName) {
-	auto* result = GetClass<TestStruct>(); 
-	EXPECT_EQ(1, 1);
-	EXPECT_TRUE(true);
+	TestStruct test{ 1, 2, 3 };
+	auto result = SerializeObject(test); 
+	EXPECT_EQ(result, "");
 }
