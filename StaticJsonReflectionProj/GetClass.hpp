@@ -52,7 +52,7 @@ Class* GetClass<CLASS>() { \
 #define DEFINE_MEMBER(NAME)  \
 		enum { NAME##Index = __COUNTER__ - BASE - 1}; \
 		localClass.fields[NAME##Index].type = GetType<decltype(ClassType::NAME)>();\
-		localClass.fields[NAME##Index].name = #NAME;  \
+		localClass.fields[NAME##Index].name = { #NAME };  \
 		localClass.fields[NAME##Index].offset = offsetof(ClassType, NAME);\
 
 #define END_ATTRIBUTES \

@@ -15,7 +15,7 @@ DEFINE_MEMBER(field1);
 END_ATTRIBUTES
 
 TEST(TestCaseName, TestName) {
-	TestStruct test{ 1, 2, 3 };
+	TestStruct test { 1, 2, 3 };
 	auto result = SerializeObject(test); 
 	EXPECT_EQ(result, "");
 }

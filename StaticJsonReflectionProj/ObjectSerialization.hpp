@@ -14,6 +14,8 @@ std::string SerializeObject(T& arg) {
 		rapidjson::StringBuffer buffer;
 		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
 		document.Accept(writer);
+		rapidjson::Value key; 
+		rapidjson::Value value; 
 
 		for (auto& field : objectInfo->fields) {
 				if (field.type == nullptr) break;
@@ -21,19 +23,25 @@ std::string SerializeObject(T& arg) {
 				switch (field.type->enumName) {
 				case TypeName::int8_t: {
 						int8_t result = *reinterpret_cast<int8_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
-						document.AddMember(field.name, rapidjson::Value(result), document.GetAllocator());
+						key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
+						value.SetInt(result);
+						
 						break;
 				}
 
 				case TypeName::int16_t: {
 						int16_t result = *reinterpret_cast<int16_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
-						document.AddMember(field.name, rapidjson::Value(result), document.GetAllocator());
+						key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
+						value.SetInt(result);
+
 						break;
 				}
-
+														
 				case TypeName::int32_t: {
 						int32_t result = *reinterpret_cast<int32_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
-						document.AddMember(field.name, rapidjson::Value(result), document.GetAllocator());
+						key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
+						value.SetInt(result);
+
 						break;
 				}
 
@@ -44,6 +52,7 @@ std::string SerializeObject(T& arg) {
 
 		}
 
+		document.AddMember(key, value, document.GetAllocator());
 		return buffer.GetString();
 }
 
