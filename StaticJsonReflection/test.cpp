@@ -3,9 +3,9 @@
 #include "../StaticJsonReflectionProj/ObjectSerialization.hpp"
 
 struct TestStruct {
-	uint32_t field3;
-	uint16_t field2;
-	uint8_t field1;
+	int32_t field3;
+	int16_t field2;
+	int8_t field1;
 };
 
 BEGIN_ATTRIBUTES_FOR(TestStruct)

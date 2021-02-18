@@ -11,9 +11,8 @@ std::string SerializeObject(T& arg) {
 		Class* objectInfo = GetClass<T>();
 		std::string result;
 		rapidjson::Document document;
-		rapidjson::StringBuffer buffer;
-		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-		document.Accept(writer);
+		document.SetObject(); 
+
 		rapidjson::Value key; 
 		rapidjson::Value value; 
 
@@ -50,9 +49,12 @@ std::string SerializeObject(T& arg) {
 						break;
 				}
 
+				document.AddMember(key, value, document.GetAllocator());
 		}
 
-		document.AddMember(key, value, document.GetAllocator());
+		rapidjson::StringBuffer buffer;
+		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+		document.Accept(writer);
 		return buffer.GetString();
 }
 
