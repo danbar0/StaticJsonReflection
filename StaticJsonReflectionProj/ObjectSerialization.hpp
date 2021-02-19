@@ -16,7 +16,7 @@ std::string SerializeObject(T& arg) {
 		rapidjson::Value key; 
 		rapidjson::Value value; 
 
-		for (auto& field : objectInfo->fields) {
+		for (const auto& field : objectInfo->fields) {
 				if (field.type == nullptr) break;
 
 				switch (field.type->enumName) {
@@ -59,22 +59,18 @@ std::string SerializeObject(T& arg) {
 }
 
 template<typename T>
-T DeserializeObject(const std::string& arg) {
+T DeserializeObject(const std::string& json) {
+		Class* objectInfo = GetClass<T>();
+		T result; 
+		rapidjson::Document document; 
+		document.Parse(json.c_str());
 
-		//for (auto& field : objectInfo->fields) {
-		//		switch (field.type->size) {
-		//		case 1:
-		//				break;
+		for (const auto& field : objectInfo->fields) {
+				if (field.type == nullptr) break;
+				if (document.HasMember(field.name.c_str()) && document[field.name.c_str()].IsInt()) {
+						(*reinterpret_cast<int8_t*>(&result) + field.offset) = document[field.name.c_str()];
+				}
+		}
 
-		//		case 2:
-		//				break;
-
-		//		case 4:
-		//				break;
-
-		//		default:
-		//				break;
-		//		}
-		//}
-
+		return result; 
 }

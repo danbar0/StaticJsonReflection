@@ -14,10 +14,20 @@ DEFINE_MEMBER(field2);
 DEFINE_MEMBER(field1);
 END_ATTRIBUTES
 
-TEST(TestCaseName, TestName) {
+TEST(SerializationTest, SerializeTest) {
 	TestStruct test { 1, 2, 3 };
 
 	auto result = SerializeObject(test); 
 
 	EXPECT_EQ(result, "{\"field3\":1,\"field2\":2,\"field1\":3}");
+}
+
+TEST(SerializationTest, DeserializeTest) {
+		std::string testJsonData = "{\"field3\":1,\"field2\":2,\"field1\":3}"; 
+
+		TestStruct result = DeserializeObject<TestStruct>(testJsonData);
+
+		EXPECT_EQ(result.field1, 1);
+		EXPECT_EQ(result.field2, 2);
+		EXPECT_EQ(result.field3, 3);
 }
