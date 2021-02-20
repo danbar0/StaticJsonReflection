@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include <string>
 
 template<typename T>
 std::string SerializeObject(T&);
