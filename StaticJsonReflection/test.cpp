@@ -3,15 +3,15 @@
 #include "../StaticJsonReflectionProj/ObjectSerialization.hpp"
 
 struct TestStruct {
-	int32_t field3;
+	int32_t field1;
 	int16_t field2;
-	int8_t field1;
+	int8_t field3;
 };
 
 BEGIN_ATTRIBUTES_FOR(TestStruct)
-DEFINE_MEMBER(field3);
-DEFINE_MEMBER(field2);
 DEFINE_MEMBER(field1);
+DEFINE_MEMBER(field2);
+DEFINE_MEMBER(field3);
 END_ATTRIBUTES
 
 TEST(SerializationTest, SerializeTest) {
@@ -19,11 +19,11 @@ TEST(SerializationTest, SerializeTest) {
 
 	auto result = SerializeObject(test); 
 
-	EXPECT_EQ(result, "{\"field3\":1,\"field2\":2,\"field1\":3}");
+	EXPECT_EQ(result, "{\"field1\":1,\"field2\":2,\"field3\":3}");
 }
 
 TEST(SerializationTest, DeserializeTest) {
-		std::string testJsonData = "{\"field3\":1,\"field2\":2,\"field1\":3}"; 
+		std::string testJsonData = "{\"field1\":1,\"field2\":2,\"field3\":3}"; 
 
 		TestStruct result = DeserializeObject<TestStruct>(testJsonData);
 

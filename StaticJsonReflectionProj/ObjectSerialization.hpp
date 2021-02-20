@@ -68,7 +68,9 @@ T DeserializeObject(const std::string& json) {
 		for (const auto& field : objectInfo->fields) {
 				if (field.type == nullptr) break;
 				if (document.HasMember(field.name.c_str()) && document[field.name.c_str()].IsInt()) {
-						(*reinterpret_cast<int8_t*>(&result) + field.offset) = document[field.name.c_str()];
+						auto* destination = reinterpret_cast<int8_t*>(&result) + field.offset;
+						auto source = document[field.name.c_str()].GetInt(); 
+						memcpy(destination, &source, field.type->size);
 				}
 		}
 
