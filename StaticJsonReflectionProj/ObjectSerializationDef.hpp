@@ -48,7 +48,7 @@ std::string SerializeObject(T& arg) {
 						assert(false);
 						break;
 				}
-
+		  
 				document.AddMember(key, value, document.GetAllocator());
 		}
 
