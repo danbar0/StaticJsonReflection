@@ -21,6 +21,9 @@
     <ClInclude Include="GetClass.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectSerializationDef.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ObjectSerialization.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

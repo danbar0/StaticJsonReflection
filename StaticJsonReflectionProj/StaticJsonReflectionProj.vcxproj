@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="GetClass.hpp" />
     <ClInclude Include="ObjectSerialization.hpp" />
+    <ClInclude Include="ObjectSerializationDef.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

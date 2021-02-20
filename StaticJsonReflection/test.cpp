@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "../StaticJsonReflectionProj/GetClass.hpp"
-#include "../StaticJsonReflectionProj/ObjectSerialization.hpp"
+#include "../StaticJsonReflectionProj/ObjectSerializationDef.hpp"
 
 struct TestStruct {
 	int32_t field1;
