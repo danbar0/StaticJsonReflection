@@ -43,19 +43,6 @@ std::string SerializeObject(T& arg) {
 								break;
 						}
 
-						case TypeName::int64_t: {
-								int64_t destination = 0;
-								memcpy(&destination, source, field.type->size);
-								value.SetInt64(destination);
-								break;
-						}
-						case TypeName::uint64_t: {
-								uint64_t destination = 0;
-								memcpy(&destination, source, field.type->size);
-								value.SetUint64(destination);
-								break;
-						}
-
 						default:
 								assert(false);
 								break;
