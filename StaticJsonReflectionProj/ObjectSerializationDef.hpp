@@ -8,7 +8,7 @@
 
 template<typename T>
 std::string SerializeObject(T& arg) {
-		Class* objectInfo = GetClass<T>();
+		const Class* objectInfo = GetClass<T>();
 		std::string result;
 		rapidjson::Document document;
 		document.SetObject(); 
@@ -60,7 +60,7 @@ std::string SerializeObject(T& arg) {
 
 template<typename T>
 T DeserializeObject(const std::string& json) {
-		Class* objectInfo = GetClass<T>();
+		const Class* objectInfo = GetClass<T>();
 		T result; 
 		rapidjson::Document document; 
 		document.Parse(json.c_str());
