@@ -43,12 +43,16 @@ std::string SerializeObject(T& arg) {
 								break;
 						}
 
-						case TypeName::int64_t:
-						case TypeName::uint64_t: {
+						case TypeName::int64_t: {
 								int64_t destination = 0;
 								memcpy(&destination, source, field.type->size);
-								value.SetInt(destination);
-
+								value.SetInt64(destination);
+								break;
+						}
+						case TypeName::uint64_t: {
+								uint64_t destination = 0;
+								memcpy(&destination, source, field.type->size);
+								value.SetUint64(destination);
 								break;
 						}
 
@@ -63,6 +67,7 @@ std::string SerializeObject(T& arg) {
 		rapidjson::StringBuffer buffer;
 		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 		document.Accept(writer);
+
 		return buffer.GetString();
 }
 
