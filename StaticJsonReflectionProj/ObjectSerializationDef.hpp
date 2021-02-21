@@ -29,7 +29,6 @@ std::string SerializeObject(T& arg) {
 								int32_t destination = 0;
 								memcpy(&destination, source, field.type->size);
 								value.SetInt(destination);
-
 								break;
 						}
 
@@ -39,7 +38,6 @@ std::string SerializeObject(T& arg) {
 								uint32_t destination = 0; 
 								memcpy(&destination, source, field.type->size);
 								value.SetUint(destination);
-						
 								break;
 						}
 
@@ -67,7 +65,8 @@ T DeserializeObject(const std::string& json) {
 
 		for (const auto& field : objectInfo->fields) {
 				if (field.type == nullptr) break;
-				if (document.HasMember(field.name.c_str()) && document[field.name.c_str()].IsInt()) {
+				if (document.HasMember(field.name.c_str()) && 
+						(document[field.name.c_str()].IsInt() || document[field.name.c_str()].IsUint())) {
 						auto* destination = reinterpret_cast<int8_t*>(&result) + field.offset;
 						auto source = document[field.name.c_str()].GetInt(); 
 
