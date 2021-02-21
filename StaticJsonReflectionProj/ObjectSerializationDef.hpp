@@ -19,35 +19,28 @@ std::string SerializeObject(T& arg) {
 		for (const auto& field : objectInfo->fields) {
 				if (field.type == nullptr) break;
 
+				key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
+
 				switch (field.type->enumName) {
-				case TypeName::int8_t: {
-						int8_t result = *reinterpret_cast<int8_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
-						key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
-						value.SetInt(result);
+						case TypeName::int8_t:
+						case TypeName::int16_t:
+						case TypeName::int32_t:
+						case TypeName::uint8_t:
+						case TypeName::uint16_t:
+						case TypeName::uint32_t: {
+								int8_t* source = reinterpret_cast<int8_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
+								int32_t destination = 0; 
+
+								memcpy(&destination, source, field.type->size);
+								value.SetInt(destination);
 						
-						break;
-				}
+								break;
+						}
 
-				case TypeName::int16_t: {
-						int16_t result = *reinterpret_cast<int16_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
-						key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
-						value.SetInt(result);
-
-						break;
-				}
-														
-				case TypeName::int32_t: {
-						int32_t result = *reinterpret_cast<int32_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
-						key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
-						value.SetInt(result);
-
-						break;
-				}
-
-				default:
-						assert(false);
-						break;
-				}
+						default:
+								assert(false);
+								break;
+						}
 		  
 				document.AddMember(key, value, document.GetAllocator());
 		}
