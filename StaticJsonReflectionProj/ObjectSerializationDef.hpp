@@ -20,20 +20,35 @@ std::string SerializeObject(T& arg) {
 				if (field.type == nullptr) break;
 
 				key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
+				int8_t* source = reinterpret_cast<int8_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
 
 				switch (field.type->enumName) {
 						case TypeName::int8_t:
 						case TypeName::int16_t:
-						case TypeName::int32_t:
+						case TypeName::int32_t: {
+								int32_t destination = 0;
+								memcpy(&destination, source, field.type->size);
+								value.SetInt(destination);
+
+								break;
+						}
+
 						case TypeName::uint8_t:
 						case TypeName::uint16_t:
 						case TypeName::uint32_t: {
-								int8_t* source = reinterpret_cast<int8_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
-								int32_t destination = 0; 
+								uint32_t destination = 0; 
+								memcpy(&destination, source, field.type->size);
+								value.SetUint(destination);
+						
+								break;
+						}
 
+						case TypeName::int64_t:
+						case TypeName::uint64_t: {
+								int64_t destination = 0;
 								memcpy(&destination, source, field.type->size);
 								value.SetInt(destination);
-						
+
 								break;
 						}
 
