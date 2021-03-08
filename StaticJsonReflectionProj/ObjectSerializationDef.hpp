@@ -9,18 +9,16 @@
 template<typename T>
 std::string SerializeObject(T& arg) {
 		const Class* objectInfo = GetClass<T>();
-		std::string result;
 		rapidjson::Document document;
-		document.SetObject(); 
-
 		rapidjson::Value key; 
-		rapidjson::Value value; 
+
+		document.SetObject();
 
 		for (const auto& field : objectInfo->fields) {
 				if (field.type == nullptr) break;
 
 				key.SetString(field.name.c_str(), field.name.size(), document.GetAllocator());
-				int8_t* source = reinterpret_cast<int8_t*>(reinterpret_cast<int8_t*>(&arg) + field.offset);
+				int8_t* source = reinterpret_cast<int8_t*>(&arg) + field.offset;
 
 				switch (field.type->enumName) {
 						case TypeName::int8_t:
