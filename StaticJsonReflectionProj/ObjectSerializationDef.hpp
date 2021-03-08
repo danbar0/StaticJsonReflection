@@ -9,8 +9,10 @@
 template<typename T>
 std::string SerializeObject(T& arg) {
 		const Class* objectInfo = GetClass<T>();
+		std::string result;
 		rapidjson::Document document;
 		rapidjson::Value key; 
+		rapidjson::Value value; 
 
 		document.SetObject();
 
